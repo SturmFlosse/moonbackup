@@ -70,11 +70,11 @@ After you confirmed that a test mail can reach your inbox, configure the cron jo
 2. Turn on the second system
 3. Place the scripts from the "scripts"-folder of this repository into a dataset or folder on the system
 4. Go to System Settings - Advanced - scroll down to Cron Jobs
-5. Add the following cron tasks:
-  1. Description: "Run Replication Check Use Lockfile", command: "/mnt/pool/dataset/folder/run_replication_check_use_lockfile.sh", Run as user: someadminuser, Schedule: Every XX min (e.g. 15), Check "Hide Standard Output", Uncheck "Hide Standard Error", Uncheck "Enabled" (we will turn this on later).
-  2. Description: "Check Replication Scrub, Mail, Shutdown", command: "/mnt/pool/dataset/folder/scrub-replication-check-shutdown-5min_lockfile.sh", Run as user: someadminuser, Schedule: Default, Check "Hide Standard Output", Uncheck "Hide Standard Error", Uncheck "Enabled"
-  3. Description: "Replication LOG Mail", command: "/mnt/pool/dataset/folder/Replication_LOG.sh", Run as user: someadminuser, Schedule: Default, Uncheck "Hide Standard Output", Uncheck "Hide Standard Error", Uncheck "Enabled"
-  4. Description: "System still online", command: "/mnt/pool/dataset/folder/scrub-replication-check-System-still-online.sh", Run as user: someadminuser, Schedule: Timeframe you want to get notified, Uncheck "Hide Standard Output", Uncheck "Hide Standard Error", Check "Enabled"
+5. Add the following cron tasks (CHANGE THE FOLDER DESCRIPTION ACCORDING TO YOUR DATA STRUCTURE - /mnt/CHANGETHIS/nameofthescript.sh):
+  - Description: "Run Replication Check Use Lockfile", command: "/mnt/pool/dataset/folder/run_replication_check_use_lockfile.sh", Run as user: someadminuser, Schedule: Every XX min (e.g. 15), Check "Hide Standard Output", Uncheck "Hide Standard Error", Uncheck "Enabled" (we will turn this on later).
+  - Description: "Check Replication Scrub, Mail, Shutdown", command: "/mnt/pool/dataset/folder/scrub-replication-check-shutdown-5min_lockfile.sh", Run as user: someadminuser, Schedule: Default, Check "Hide Standard Output", Uncheck "Hide Standard Error", Uncheck "Enabled"
+  - Description: "Replication LOG Mail", command: "/mnt/pool/dataset/folder/Replication_LOG.sh", Run as user: someadminuser, Schedule: Default, Uncheck "Hide Standard Output", Uncheck "Hide Standard Error", Uncheck "Enabled"
+  - Description: "System still online", command: "/mnt/pool/dataset/folder/scrub-replication-check-System-still-online.sh", Run as user: someadminuser, Schedule: Timeframe you want to get notified, Uncheck "Hide Standard Output", Uncheck "Hide Standard Error", Check "Enabled"
 6. Go to the Truenas Shell (System Settings - Shell) and run the command " midclt call cronjob.query | jq '.[] | {id, description}' " to see each cron job id with its description. Note them down (or screenshot).
 7. Open the script "run_replication_check_use_lockfile.sh" with your prefered editor of choice and add the cron job id with the description "Check Replication Scrub, Mail, Shutdown" at the end of the script. Save the changes
 8. Open the script "scrub-replication-check-shutdown-5min_lockfile.sh" with your prefered editor of choice and add the cron job id with the description "Replication LOG Mail" roughly in the middle of the script. Save the changes
