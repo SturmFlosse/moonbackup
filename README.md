@@ -96,12 +96,14 @@ If you did run the cron job manually without enabling it, it will not run automa
  
 # FAQ
 
-Why not just use a fixed time for the replication and cron jobs?
+### Why not just use a fixed time for the replication and cron jobs?
+
 At first I used time based replication and cron jobs but then recognized that the RTC Wake up in BIOS does not match my timezone no matter how i configure it. Also a faulty CMOS Battery can alter the BIOS time. If the time to power on the system does not match the schedule of the replication and cron jobs they do not get excecuted which leads to no replications and no automatic shutdown of the system.
 
 Having replication jobs to be done "every XX min" to prevent the "missed fixed time" does not seem suitable enough to me.
 
-What is the benefit of using scripts?
+### What is the benefit of using scripts?
+
 Scripts can do whatever you want them to do. In this case you get much more control over how you want to do the schedule and sequence of jobs to be done. 
 For example with only replication jobs via the WebGUI you can't define a rule like "wait till one replication is done and then do the next one" . You can only define the start time. 
 Also you can't shutdown the system automatically via the GUI. You need a shell command for that.
