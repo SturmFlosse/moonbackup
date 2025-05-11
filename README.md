@@ -90,6 +90,8 @@ If you did run the cron job manually without enabling it, it will not run automa
 
 - Instead of calling other cron jobs in the scripts, call the script directly (not suitable for mail notifications)
 
+- No inclusion of a command to start a scrub task (I did not find a working command - still searching...) 
+
 - When the system gets powered on manually, scripts run automatically and shutdown the system before the admin can configure something.
   - First solution: Picking a time for powering on the system right after the cron schedule. Then disabling the cron job "Run Replication Check Use Lockfile" right after logging into the WebUI. Enabling it before shutting down againg to start the automation next time the system gets powered on.
   - Second solution: Define a more precise schedule in the cron job calling the script "run_replication_check_use_lockfile.sh". For example defining a schedule "Every 15 min between 1 AM and 6 AM" would mean the script (and the shutdown command) would not get called when you power on the system through the day.
@@ -104,10 +106,13 @@ Having replication jobs to be done "every XX min" to prevent the "missed fixed t
 
 ### What is the benefit of using scripts?
 
-Scripts can do whatever you want them to do. In this case you get much more control over how you want to do the schedule and sequence of jobs to be done. 
+Scripts can do whatever you want them to do. In this case you get much more control over how you want to do the schedule and sequence of jobs to be done.
 For example with only replication jobs via the WebGUI you can't define a rule like "wait till one replication is done and then do the next one" . You can only define the start time. 
 Also you can't shutdown the system automatically via the GUI. You need a shell command for that.
 
+I could get much more control over how I want this process to be done. I could create a check at the beginning of some scripts to check if the script is already excecuted by one cron job using a temp file and then exit the job instead of having multiple jobs running. I could create "check loops" and define the time interval in which it should check again. And more.
+
+If you get the hang of it scripts can be very beneficial. 
 
 
 
