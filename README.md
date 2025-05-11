@@ -11,6 +11,8 @@ If you see improvements, please let me and others know and maybe we can implemen
 If you find the scripts and guidelines helpful and you feel the need to thank me, please don't. I am not doing this for money. I just wanna contribute to a great community and maybe lower the power consumption of NAS systems for everyone a bit. 
 If you feel the need, donate some of your energy savings to your local animal shelter or something else. Thanks :)
 
+If you have questions: Please read the FAQ.
+
 # Use Case
 
 A main TrueNAS system is running 24/7 while a second TrueNAS system only powers on at night (or any other specific time), runs pull replication jobs to receive the latest snapshots of the main system and then powers off again. 
@@ -89,7 +91,20 @@ If you did run the cron job manually without enabling it, it will not run automa
 - Instead of calling other cron jobs in the scripts, call the script directly (not suitable for mail notifications)
 
 - When the system gets powered on manually, scripts run automatically and shutdown the system before the admin can configure something.
-  - Solution: Picking a time for powering on the system right after the cron schedule. Then disabling the cron job "Run Replication Check Use Lockfile" right after logging into the WebUI. Enabling it before shutting down againg to start the automation next time the system gets powered on.
+  - First solution: Picking a time for powering on the system right after the cron schedule. Then disabling the cron job "Run Replication Check Use Lockfile" right after logging into the WebUI. Enabling it before shutting down againg to start the automation next time the system gets powered on.
+  - Second solution: Define a more precise schedule in the cron job calling the script "run_replication_check_use_lockfile.sh". For example defining a schedule "Every 15 min between 1 AM and 6 AM" would mean the script (and the shutdown command) would not get called when you power on the system through the day.
+ 
+# FAQ
+
+Why not just use a fixed time for the replication and cron jobs?
+At first I used time based replication and cron jobs but then recognized that the RTC Wake up in BIOS does not match my timezone no matter how i configure it. Also a faulty CMOS Battery can alter the BIOS time. If the time to power on the system does not match the schedule of the replication and cron jobs they do not get excecuted which leads to no replications and no automatic shutdown of the system.
+
+Having replication jobs to be done "every XX min" to prevent the "missed fixed time" does not seem suitable enough to me.
+
+What is the benefit of using scripts?
+Scripts can do whatever you want them to do. In this case you get much more control over how you want to do the schedule and sequence of jobs to be done. 
+For example with only replication jobs via the WebGUI you can't define a rule like "wait till one replication is done and then do the next one" . You can only define the start time. 
+Also you can't shutdown the system automatically via the GUI. You need a shell command for that.
 
 
 
