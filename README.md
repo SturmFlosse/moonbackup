@@ -1,7 +1,7 @@
 # moonbackup
 In this repository you will find scripts and guides to fully automate TrueNAS replication systems. 
 
-# Diclaimer
+# Disclaimer
 Take a close look at the scripts for yourself and really try to understand how they work and how to use them. These scripts were created for a special use case and should be treated this way. I will not take responsibility for any damage or loss of data that may occur on your systems! 
 
 I am not a professional programmer and never will be but I wanted this solution so I did a lot of research and got these scripts working. Also I don't have much experience using Github but I read online that many other people are searching for the same solutions. So I thought it might help others as well. 
