@@ -29,3 +29,7 @@ midclt call system.reboot
 
 # Call a script from the TrueNAS Shell
 /mnt/pool/dataset/folder/script.sh
+
+# Run a scrub on a pool (Please do your own testing)
+midclt call pool.scrub.scrub <poolname>
+(Reference: https://www.truenas.com/docs/api/scale_websocket_api.html#pool.scrub)
