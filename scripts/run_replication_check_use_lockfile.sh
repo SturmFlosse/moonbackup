@@ -1,10 +1,18 @@
-#!/bin/bash
+    #!/bin/bash
 
 LOCKFILE="/tmp/replication.lock"
 
 # Check if the lock file exists (meaning another instance is running)
 if [[ -f "$LOCKFILE" ]]; then
-    echo "Script is already running. Exiting to prevent duplicate execution."
+    echo "Replication-Script is already running. Exiting to prevent duplicate execution."
+    exit 1
+fi
+
+LOCKFILE2="/tmp/replication_scrub_check.lock"
+
+# Check if the lock file exists (meaning another instance is running)
+if [[ -f "$LOCKFILE2" ]]; then
+    echo "Shutdown-Script is already running. Exiting to prevent duplicate execution."
     exit 1
 fi
 
