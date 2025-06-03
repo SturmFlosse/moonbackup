@@ -73,7 +73,7 @@ After you confirmed that a test mail can reach your inbox, configure the cron jo
 3. Place the scripts from the "scripts"-folder of this repository into a dataset or folder on the system
 4. Go to System Settings - Advanced - scroll down to Cron Jobs
 5. Add the following cron tasks (CHANGE THE FOLDER DESCRIPTION ACCORDING TO YOUR DATA STRUCTURE - /mnt/CHANGETHIS/nameofthescript.sh):
-  - Description: "Run Replication Check Use Lockfile", command: "/mnt/pool/dataset/folder/run_replication_check_use_lockfile.sh", Run as user: someadminuser, Schedule: Every XX min (e.g. 15), Check "Hide Standard Output", Uncheck "Hide Standard Error", Uncheck "Enabled" (we will turn this on later).
+  - Description: "Run Replication Check Use Lockfile", command: "/mnt/pool/dataset/folder/run_replication_check_use_lockfile.sh", Run as user: someadminuser, Schedule: Eg. "Every XX min" (you can also set the timeframe in which the schedule gets executed - eg. "Every XX min between 2 and 5 AM"), Check "Hide Standard Output", Uncheck "Hide Standard Error", Uncheck "Enabled" (we will turn this on later).
   - Description: "Check Replication Scrub, Mail, Shutdown", command: "/mnt/pool/dataset/folder/scrub-replication-check-shutdown-lockfile.sh", Run as user: someadminuser, Schedule: Default, Check "Hide Standard Output", Uncheck "Hide Standard Error", Uncheck "Enabled"
   - Description: "Replication LOG Mail", command: "/mnt/pool/dataset/folder/Replication_LOG.sh", Run as user: someadminuser, Schedule: Default, Uncheck "Hide Standard Output", Uncheck "Hide Standard Error", Uncheck "Enabled"
   - Description: "System still online", command: "/mnt/pool/dataset/folder/scrub-replication-check-System-still-online.sh", Run as user: someadminuser, Schedule: Timeframe you want to get notified, Uncheck "Hide Standard Output", Uncheck "Hide Standard Error", Check "Enabled"
@@ -90,7 +90,9 @@ If you did run the cron job manually without enabling it, it will not run automa
 
 - Instead of calling other cron jobs in the scripts, call the script directly (not suitable for mail notifications)
 
-- No inclusion of a command to start a scrub task (I did not find a working command - still searching...) 
+- No inclusion of a command to start a scrub task (Solution is still being tested and not implemented in a script)
+  - Solution: A shell command could be " midclt call pool.scrub.scrub <poolname> " (Reference: https://www.truenas.com/docs/api/scale_websocket_api.html#pool.scrub)
+  - Please do your own testing. I will only implement it in a script if I know it works!
 
 - When the system gets powered on manually, scripts run automatically and shutdown the system before the admin can configure something.
   - First solution: Picking a time for powering on the system right after the cron schedule. Then disabling the cron job "Run Replication Check Use Lockfile" right after logging into the WebUI. Enabling it before shutting down againg to start the automation next time the system gets powered on.
